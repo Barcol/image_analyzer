@@ -4,7 +4,8 @@ from image_downloader import ImageDownloader as Id
 
 
 def run():
-    download_images()
+    download_images() #  do not run if database available
+    pass
 
 
 def download_images():

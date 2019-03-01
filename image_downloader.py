@@ -11,13 +11,13 @@ class ImageDownloader:
         pass
 
     def download(self, images: str, path: str):
-        newpath = f"./{self.__file_to_folder_name(images)}"
+        newpath = f"./{self.__file_to_directory_name(images)}"
         if not os.path.exists(newpath):
             os.makedirs(newpath)
         with open(path + "/" + images, "r") as file:
-            for number, link in (tqdm(enumerate(file))):
+            for number, link in (tqdm(enumerate(file), ncols=100)):
                 try:
-                    urllib.request.urlretrieve(link, f"{self.__file_to_folder_name(images)}/{number}.jpg")
+                    urllib.request.urlretrieve(link, f"{self.__file_to_directory_name(images)}/{number}.jpg")
                 except urllib.error.HTTPError:
                     print(f"\n{link} does not contain any image!")
                 except urllib.error.URLError:
@@ -28,7 +28,7 @@ class ImageDownloader:
                     print("Connection time out")
 
     @staticmethod
-    def __file_to_folder_name(name):
+    def __file_to_directory_name(name):
         for position, sign in enumerate(name):
             if sign == ".":
                 return name[0:position]
