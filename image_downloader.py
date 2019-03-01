@@ -9,13 +9,13 @@ class ImageDownloader:
     def __init__(self):
         pass
 
-    def __download(self, images):
+    def download(self, images: str):
         newpath = f"./{self.__file_to_folder_name(images)}"
         if not os.path.exists(newpath):
             os.makedirs(newpath)
-        with open(images, "r") as file:
-            for number, line in enumerate(tqdm(file)):
-                urllib.request.urlretrieve(line, f".{images}/{number}.jpg")
+        with open("imagesToDownload/" + images, "r") as file:
+            for number, line in (tqdm(enumerate(file))):
+                urllib.request.urlretrieve(line, f"{self.__file_to_folder_name(images)}/{number}.jpg")
 
     @staticmethod
     def __file_to_folder_name(name):
