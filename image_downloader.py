@@ -15,7 +15,7 @@ class ImageDownloader:
         if not os.path.exists(newpath):
             os.makedirs(newpath)
         with open(path + "/" + images, "r") as file:
-            for number, link in (tqdm(enumerate(file), ncols=100)):
+            for number, link in (tqdm(list(enumerate(file)))):
                 try:
                     urllib.request.urlretrieve(link, f"{self.__file_to_directory_name(images)}/{number}.jpg")
                 except urllib.error.HTTPError:
@@ -26,6 +26,10 @@ class ImageDownloader:
                     print("Invalid link")
                 except TimeoutError:
                     print("Connection time out")
+                except ConnectionResetError:
+                    print("Connection was suddenly closed")
+                except Exception:
+                    print("For fuck's sake, what now")
 
     @staticmethod
     def __file_to_directory_name(name):
