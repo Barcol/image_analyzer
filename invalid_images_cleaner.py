@@ -5,33 +5,32 @@ import numpy as np
 
 
 class InvalidImagesCleaner:
-    def __init__(self):
-        self.patterns_to_delete = {}
-        self.images_to_be_verifed = {}
-
     def iterate_folders(self, mold_directory, *folders_with_images):
+        patterns_to_delete = {}
+        images_to_be_verifed = {}
         for pattern_file_path in glob(f"{mold_directory}/*.jpg"):
-            self.patterns_to_delete[pattern_file_path] = cv2.imread(pattern_file_path)
+            patterns_to_delete[pattern_file_path] = cv2.imread(pattern_file_path)
         for folder in folders_with_images:
             for file_path in glob(f"{folder}/*.jpg"):
-                self.images_to_be_verifed[file_path] = cv2.imread(file_path)
-        self.delete_none_types()
-        self.delete_useless_images()
+                images_to_be_verifed[file_path] = cv2.imread(file_path)
+        self.delete_none_types(patterns_to_delete, images_to_be_verifed)
+        self.delete_useless_images(patterns_to_delete, images_to_be_verifed)
 
-    def delete_none_types(self):
-        for image in self.patterns_to_delete:
-            if self.patterns_to_delete[image] is None:
+    @staticmethod
+    def delete_none_types(patterns_to_delete, images_to_be_verifed):
+        for image in patterns_to_delete.copy():
+            if patterns_to_delete[image] is None:
                 os.remove(image)
-                del self.patterns_to_delete[image]
-        for image in self.images_to_be_verifed:
-            if self.patterns_to_delete[image] is None:
+                del patterns_to_delete[image]
+        for image in images_to_be_verifed.copy():
+            if images_to_be_verifed[image] is None:
                 os.remove(image)
-                del self.images_to_be_verifed[image]
+                del images_to_be_verifed[image]
 
-    def delete_useless_images(self):
-        for pattern_image in self.patterns_to_delete:
-            for image in self.images_to_be_verifed:
-                if self.patterns_to_delete[pattern_image].shape == self.images_to_be_verifed[image].shape and not\
-                        (np.bitwise_xor(self.patterns_to_delete[pattern_image], self.images_to_be_verifed[image]).any()):
+    @staticmethod
+    def delete_useless_images(patterns_to_delete, images_to_be_verifed):
+        for pattern_image in patterns_to_delete:
+            for image in images_to_be_verifed.copy():
+                if (patterns_to_delete[pattern_image].shape == images_to_be_verifed[image].shape
+                        and not np.bitwise_xor(patterns_to_delete[pattern_image], images_to_be_verifed[image]).any()):
                     os.remove(image)
-                    del self.images_to_be_verifed[image]

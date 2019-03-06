@@ -5,8 +5,9 @@ from invalid_images_cleaner import InvalidImagesCleaner as Iic
 
 
 def run():
-    # download_images()  # do not run if database available
-    clean_images()  # the only job that program has to do at the moment, is to remove unwanted images
+    # download_images()  # run if database not available
+    # clean_images()  # run if "this image is not available" images are present
+    pass
 
 
 def clean_images():
