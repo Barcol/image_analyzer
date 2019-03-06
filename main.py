@@ -11,8 +11,7 @@ def run():
 
 def clean_images():
     cleaner = Iic()
-    cleaner.iterate_folders("imagesToBeDeleted")  # this string is the name of the folder that contains 2 sample images
-                                                # all images that looks exactly the same, will be removed
+    cleaner.iterate_folders("imagesToBeDeleted", "beer_in_glasses", "beer_in_bottles")
 
 
 def download_images():
