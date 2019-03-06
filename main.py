@@ -1,11 +1,17 @@
 import os
 
 from image_downloader import ImageDownloader as Id
+from invalid_images_cleaner import InvalidImagesCleaner as Iic
 
 
 def run():
-    download_images() #  do not run if database available
-    pass
+    # download_images()  # do not run if database available
+    clean_images()
+
+
+def clean_images():
+    cleaner = Iic()
+    cleaner.iterate_folders("imagesToBeDeleted")
 
 
 def download_images():

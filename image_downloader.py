@@ -28,8 +28,8 @@ class ImageDownloader:
                     print("Connection time out")
                 except ConnectionResetError:
                     print("Connection was suddenly closed")
-                except Exception:
-                    print("For fuck's sake, what now")
+                #except Exception:
+                    #print("For fuck's sake, what now")
 
     @staticmethod
     def __file_to_directory_name(name):
