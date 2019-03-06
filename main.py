@@ -6,12 +6,13 @@ from invalid_images_cleaner import InvalidImagesCleaner as Iic
 
 def run():
     # download_images()  # do not run if database available
-    clean_images()
+    clean_images()  # the only job that program has to do at the moment, is to remove unwanted images
 
 
 def clean_images():
     cleaner = Iic()
-    cleaner.iterate_folders("imagesToBeDeleted")
+    cleaner.iterate_folders("imagesToBeDeleted")  # this string is the name of the folder that contains 2 sample images
+                                                # all images that looks exactly the same, will be removed
 
 
 def download_images():

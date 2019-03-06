@@ -1,7 +1,7 @@
 """This image downloader only works on text files that contains exactly one .jpg link in every line"""
 import os
-import urllib.request
 import urllib.error
+import urllib.request
 
 from tqdm import tqdm
 
