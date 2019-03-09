@@ -1,9 +1,9 @@
 from glob import glob
 
 import cv2
+import keras
 import numpy as np
 from scipy import misc
-from tensorflow import keras
 
 
 class ModelGenerator:
@@ -62,10 +62,6 @@ class ModelGenerator:
 
         model.fit(train_data, train_labels, epochs=80, validation_data=(test_data, test_labels))
 
-        for image_path in glob("szklarian_beers/*"):
-            image = cv2.imread(image_path)
-            image = misc.imresize(image, (100, 100, 3))
-            image = np.array(image)
-            image = image / image.max()
-            result = model.predict(np.array([image]))
-            print(image_path, f" to na {int(round(100*result[0][0]))}% butelka,a na {int(round(100*result[0][1]))}% szklanka ")
+        model.save_weights('model_weights.h5')
+        model.save('model.h5')
+
