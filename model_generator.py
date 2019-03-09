@@ -9,7 +9,7 @@ from tensorflow import keras
 class ModelGenerator:
     @staticmethod
     def load_images(image_dir: str):
-        images = [cv2.imread(bottle_image) for bottle_image in glob(f"/{image_dir}/*")]
+        images = [cv2.imread(bottle_image) for bottle_image in glob(f"{image_dir}/*")]
 
         images = [image for image in images if image is not None]
 
@@ -61,3 +61,11 @@ class ModelGenerator:
                       ["accuracy"])
 
         model.fit(train_data, train_labels, epochs=100, validation_data=(test_data, test_labels))
+
+        for image_path in glob("szklarian_beers/*"):
+            image = cv2.imread(image_path)
+            image = misc.imresize(image, (100, 100, 3))
+            image = np.array(image)
+            image = image / image.max()
+            result = model.predict(np.array([image]))
+            print(image_path, f" to na {result[0]}% butelka, a na {result[1]}% szklanka ")
